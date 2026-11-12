@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Full history is re-downloaded on every run; only the small dashboard files are committed.
+data/raw/

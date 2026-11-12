@@ -1,0 +1,53 @@
+name: Refresh forecast
+
+on:
+  schedule:
+    - cron: "15 */6 * * *"   # every 6 hours: new data, retrain, new forecast
+    - cron: "45 2 * * 1"     # Mondays: also re-run the backtest
+  workflow_dispatch:
+    inputs:
+      backtest:
+        description: "Also re-run the backtest"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install packages
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Refresh data and forecast
+        if: github.event.schedule != '45 2 * * 1' && inputs.backtest != true
+        run: python -m src.pipeline
+
+      - name: Refresh data, forecast and backtest
+        if: github.event.schedule == '45 2 * * 1' || inputs.backtest == true
+        run: python -m src.pipeline --backtest
+
+      - name: Commit updated dashboard files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || git commit -m "Refresh forecast"
+          git push

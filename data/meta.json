@@ -1,0 +1,11 @@
+{
+  "city": "Kuala Lumpur",
+  "timezone": "Asia/Kuala_Lumpur",
+  "horizon": 48,
+  "generated_at": "2026-11-12T16:14:09.319148+00:00",
+  "observed_hours": 37481,
+  "history_start": "2022-08-04T00:00:00+00:00",
+  "origin": "2026-11-12T16:00:00+00:00",
+  "training_rows": 596632,
+  "fit_seconds": 47.2
+}
