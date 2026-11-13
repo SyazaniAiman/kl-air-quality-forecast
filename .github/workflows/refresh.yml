@@ -1,9 +1,10 @@
 name: Refresh forecast
 
 on:
-  schedule:
-    - cron: "15 */6 * * *"   # every 6 hours: new data, retrain, new forecast
-    - cron: "45 2 * * 1"     # Mondays: also re-run the backtest
+  # Automatic refresh is switched off. To switch it back on, uncomment these three lines.
+  # schedule:
+  #   - cron: "15 */6 * * *"   # every 6 hours: new data, retrain, new forecast
+  #   - cron: "45 2 * * 1"     # Mondays: also re-run the backtest
   workflow_dispatch:
     inputs:
       backtest:
