@@ -14,7 +14,7 @@ past forecasts turned out.
    with an 80% prediction interval.
 3. **Backtests** the model with walk-forward validation against two simple baselines.
 4. **Logs** every forecast it issues and scores it once the predicted hour has passed.
-5. **Displays** all of this in a Streamlit dashboard.
+5. **Displays** all of this in a Streamlit dashboard (https://ckp9sdziszn5mdxuhvucqb.streamlit.app/).
 
 A GitHub Actions workflow repeats steps 1, 2 and 4 every six hours and step 3 weekly.
 
